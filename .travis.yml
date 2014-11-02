@@ -5,8 +5,8 @@ install:
   - pip install MySQL-python==1.2.5
 before_script:
   - mysql -e 'create database journal;'
-  - mysql -e 'create user 'journal'@'localhost' identified by 'p@ssw0rd';'
-  - mysql -e 'grant all privileges on journal.* to 'journal'@'localhost';'
+  - mysql -e "create user 'journal'@'localhost' identified by 'p@ssw0rd';"
+  - mysql -e "grant all privileges on journal.* to 'journal'@'localhost';"
 script:
   - tox
 env:
