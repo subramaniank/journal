@@ -61,8 +61,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'journal_db',
-        'USER': 'journal',
-        'PASSWORD': 'p@ssw0rd'
+        'USER': 'travis',
+        'PASSWORD': ''
     }
 }
 
