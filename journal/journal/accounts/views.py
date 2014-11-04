@@ -1,9 +1,7 @@
 from django.views.generic.base import View
 from accounts.forms import CreateWriterForm, CreateSessionForm, DeleteSessionForm
-from accounts.mixins import LoginRequiredMixin
 from accounts.presentation import user_presentation, session_presentation
-from journal import status_codes
-from utils.response_utils import JSONResponseMixin, JournalSuccessResponse, JournalResponse
+from utils.response_utils import JSONResponseMixin, JournalSuccessResponse
 
 
 class WriterView(JSONResponseMixin, View):

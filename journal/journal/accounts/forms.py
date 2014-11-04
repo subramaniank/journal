@@ -3,12 +3,12 @@ import time
 from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
+from jsonfield.fields import JSONFormField
 
 from accounts.constants import WRITER_STATES
 from accounts.mixins import LoginRequiredMixin
-from accounts.models import JournalWriter
+from accounts.models import JournalWriter, Role
 from journal import status_codes
 from utils.form_utils import JournalFormMixin
 from utils.response_utils import JournalResponse
@@ -18,6 +18,7 @@ class CreateWriterForm(JournalFormMixin, forms.Form):
 
     username = forms.CharField(required=True)
     password = forms.CharField(required=True)
+    role = JSONFormField(required=False)
     email = forms.EmailField(required=False)
     phone = forms.CharField(required=False)
 
@@ -37,6 +38,13 @@ class CreateWriterForm(JournalFormMixin, forms.Form):
             journal_writer.created_on = time.time()
         journal_writer.updated_on = time.time()
         journal_writer.save()
+
+        if d['role']:
+            for role_name in d['role'] :
+                role = Role()
+                role.name = role_name
+                role.journal_writer = journal_writer
+                role.save()
         self.instance = journal_writer
 
 class CreateSessionForm(JournalFormMixin, forms.Form):
