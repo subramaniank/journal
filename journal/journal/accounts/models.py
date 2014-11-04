@@ -12,3 +12,9 @@ class JournalWriter(models.Model):
     created_on = models.BigIntegerField()
     updated_on = models.BigIntegerField()
     extra_params = JSONField(default={})
+
+class Role(models.Model):
+
+    # painter, musician, entrepreneur,
+    name = models.CharField(max_length=100)
+    journal_writer = models.ForeignKey(JournalWriter, related_name='roles')

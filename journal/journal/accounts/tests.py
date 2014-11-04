@@ -40,8 +40,9 @@ class Test_01_AccountsUser(unittest.TestCase):
         self.assertEqual(resp['data']['username'],[USERNAME_NOT_AVAILABLE])
 
         # Create user with email, phone, first and last name
-        response = self.c.post('/accounts/writer/',{'username':'prateeks','password':'psehgal','email':'prateek.sehgal2@gmail.com','phone':'9980311998'})
+        response = self.c.post('/accounts/writer/',{'username':'prateeks','password':'psehgal','email':'prateek.sehgal2@gmail.com','phone':'9980311998', 'role':'["entrepreneur", "poet"]'})
         resp = json.loads(response.content)
+        print resp
         self.assertEqual(resp['status'], 0)
         self.assertEqual(resp['data']['username'],'prateeks')
         self.assertEqual(resp['data']['email'],'prateek.sehgal2@gmail.com')
