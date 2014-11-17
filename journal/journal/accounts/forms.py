@@ -65,6 +65,8 @@ class CreateSessionForm(JournalFormMixin, forms.Form):
         if user is not None:
             if user.is_active:
                 login(request, user)
+        else:
+            raise ValidationError({'password': 'Invalid password'})
         self.instance = request.session._session_key
 
 

@@ -8,6 +8,7 @@ import ujson as json
 REQUIRED_ERROR = u'This field is required.'
 USERNAME_NOT_AVAILABLE = u'Username not available'
 INVALID_USERNAME = u'Invalid username'
+INVALID_PASSWORD = u'Invalid password'
 
 
 class Test_01_AccountsUser(unittest.TestCase):
@@ -42,7 +43,6 @@ class Test_01_AccountsUser(unittest.TestCase):
         # Create user with email, phone, first and last name
         response = self.c.post('/accounts/writer/',{'username':'prateeks','password':'psehgal','email':'prateek.sehgal2@gmail.com','phone':'9980311998', 'role':'["entrepreneur", "poet"]'})
         resp = json.loads(response.content)
-        print resp
         self.assertEqual(resp['status'], 0)
         self.assertEqual(resp['data']['username'],'prateeks')
         self.assertEqual(resp['data']['email'],'prateek.sehgal2@gmail.com')
@@ -70,6 +70,12 @@ class Test_02_AccountsSession(unittest.TestCase):
         self.assertEqual(resp['status'], 2)
         self.assertEqual(resp['data']['username'],[INVALID_USERNAME])
         self.assertEqual(resp['data']['password'],[REQUIRED_ERROR])
+
+        #Login with wrong password
+        response = self.c.post('/accounts/session/',{'username':'prateeks','password':'psehgal1'})
+        resp = json.loads(response.content)
+        self.assertEqual(resp['status'], 2)
+        self.assertEqual(resp['data']['password'],[INVALID_PASSWORD])
 
         # Login correctly with username and password
         response = self.c.post('/accounts/session/',{'username':'prateeks','password':'psehgal'})
